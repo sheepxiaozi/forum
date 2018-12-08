@@ -24,6 +24,9 @@ class Topic(models.Model):
     class Meta:
         db_table = 'tb_topic'
 
+    def __str__(self):
+        return self.subject
+
 
 class Comment(models.Model):
     """ 评论 """
@@ -37,4 +40,6 @@ class Comment(models.Model):
     class Meta:
         db_table = 'tb_comment'
 
+    def __str__(self):
+        return self.message
 
