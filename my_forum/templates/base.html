@@ -6,9 +6,10 @@
     <link href="https://fonts.googleapis.com/css?family=Shojumaru" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    {% block stylesheet %}{% endblock %}
   </head>
   <body>
-
+    {% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
         <a class="navbar-brand" href="{% url 'index' %}">Django Boards</a>
@@ -23,6 +24,7 @@
       {% block content %}
       {% endblock %}
     </div>
+    {% endblock body %}
   </body>
 </html>
 
