@@ -2,10 +2,9 @@ from django.contrib.auth.models import User
 from django.urls import resolve
 from django.test import TestCase
 from django.urls import reverse
-
-from boards.forms import NewTopicForm
-from boards.models import Board, Topic, Comment
-from .views import index, board_topics, new_topic
+from ..views import index, board_topics, new_topic
+from ..models import Board, Topic, Comment
+from ..forms import NewTopicForm
 
 
 class IndexTests(TestCase):
@@ -139,7 +138,7 @@ class NewTopicTests(TestCase):
         self.assertFalse(Topic.objects.exists())
         self.assertFalse(Comment.objects.exists())
 
-    def test_contains_form(self):  # <- new test
+    def test_contains_form(self):  # <- new tests
         url = reverse('new_topic', kwargs={'pk': 1})
         response = self.client.get(url)
         form = response.context.get('form')
