@@ -1,5 +1,5 @@
 from django import forms
-from .models import Topic
+from .models import Topic, Comment
 
 
 class NewTopicForm(forms.ModelForm):
@@ -14,5 +14,11 @@ class NewTopicForm(forms.ModelForm):
     class Meta:
         model = Topic
         fields = ['subject', 'message']
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['message', ]
 
 
