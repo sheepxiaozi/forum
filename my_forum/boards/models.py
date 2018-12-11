@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import Truncator
 
 
 class Board(models.Model):
@@ -12,6 +13,12 @@ class Board(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_posts_count(self):
+        return Comment.objects.filter(topic__board=self).count()
+
+    def get_last_post(self):
+        return Comment.objects.filter(topic__board=self).order_by('-created_at').first()
 
 
 class Topic(models.Model):
@@ -41,5 +48,7 @@ class Comment(models.Model):
         db_table = 'tb_comment'
 
     def __str__(self):
-        return self.message
+        truncated_message = Truncator(self.message)
+        # 将一个长字符串截取为任意长度字符的简便方法
+        return truncated_message.chars(30)
 
