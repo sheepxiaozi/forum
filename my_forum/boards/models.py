@@ -27,6 +27,7 @@ class Topic(models.Model):
     last_updated = models.DateTimeField(auto_now_add=True)
     board = models.ForeignKey(Board, related_name='topics', on_delete=True)
     starter = models.ForeignKey(User, related_name='topics', on_delete=True)
+    views = models.PositiveIntegerField(default=0)
 
     class Meta:
         db_table = 'tb_topic'
