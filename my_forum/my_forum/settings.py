@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'accounts',
 
     'widget_tweaks',
+    'gravatar',
 ]
 
 MIDDLEWARE = [
