@@ -72,6 +72,10 @@ class PostUpdateView(UpdateView):
     pk_url_kwarg = 'post_pk'
     context_object_name = 'post'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(created_by=self.request.user)
+
     def form_valid(self, form):
         post = form.save(commit=False)
         post.updated_by = self.request.user
