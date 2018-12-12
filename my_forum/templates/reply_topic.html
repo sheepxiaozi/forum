@@ -8,7 +8,7 @@
   <li class="breadcrumb-item"><a href="{% url 'index' %}">Boards</a></li>
   <li class="breadcrumb-item"><a href="{% url 'board_topics' topic.board.pk %}">{{ topic.board.name }}</a></li>
   <li class="breadcrumb-item"><a href="{% url 'topic_posts' topic.board.pk topic.pk %}">{{ topic.subject }}</a></li>
-  <li class="breadcrumb-item active">Post a reply</li>
+  <li class="breadcrumb-item active">Comment a reply</li>
 {% endblock %}
 
 {% block content %}
