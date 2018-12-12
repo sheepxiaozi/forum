@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from . import views
+from . import views as accounts_views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -26,5 +27,6 @@ urlpatterns = [
         name='password_change'),
     url(r'^settings/password/done/$', auth_views.PasswordChangeDoneView.as_view(
         template_name='password_change_done.html'), name='password_change_done'),
+    url(r'^settings/account/$', accounts_views.UserUpdateView.as_view(), name='my_account'),
 ]
 
