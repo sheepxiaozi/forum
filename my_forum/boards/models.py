@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 from django.utils.text import Truncator
+from markdown import markdown
 
 
 class Board(models.Model):
@@ -52,4 +54,8 @@ class Comment(models.Model):
         truncated_message = Truncator(self.message)
         # 将一个长字符串截取为任意长度字符的简便方法
         return truncated_message.chars(30)
+
+    def get_message_as_markdown(self):
+        return mark_safe(markdown(self.message, safe_mode='escape'))
+
 
