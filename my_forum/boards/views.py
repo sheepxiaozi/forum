@@ -15,9 +15,15 @@ def index(request):
     return render(request, 'index.html', {'boards': boards})
 
 
+class BoardListView(ListView):
+    model = Board
+    context_object_name = 'boards'
+    template_name = 'index.html'
+
+
 def board_topics(request, pk):
     board = get_object_or_404(Board, pk=pk)
-    queryset = board.topics.order_by('-last_updated').annotate(replies=Count('posts') - 1)
+    queryset = board.topics.order_by('-last_updated').annotate(replies=Count('posts'))
     page = request.GET.get('page', 1)
 
     paginator = Paginator(queryset, 20)
@@ -33,6 +39,22 @@ def board_topics(request, pk):
         topics = paginator.page(paginator.num_pages)
 
     return render(request, 'topics.html', {'board': board, 'topics': topics})
+
+
+class TopicListView(ListView):
+    model = Topic
+    context_object_name = 'topics'
+    template_name = 'topics.html'
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        kwargs['board'] = self.board
+        return super().get_context_data(**kwargs)
+
+    def get_queryset(self):
+        self.board = get_object_or_404(Board, pk=self.kwargs.get('pk'))
+        queryset = self.board.topics.order_by('-last_updated').annotate(replies=Count('posts'))
+        return queryset
 
 
 @login_required
@@ -98,10 +120,5 @@ class PostUpdateView(UpdateView):
         post.save()
         return redirect('topic_posts', pk=post.topic.board.pk, topic_pk=post.topic.pk)
 
-
-class BoardListView(ListView):
-    model = Board
-    context_object_name = 'boards'
-    template_name = 'index.html'
 
 
